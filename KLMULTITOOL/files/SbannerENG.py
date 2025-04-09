@@ -1,5 +1,5 @@
 version = 0.3
-
+bakaversion = 0.1
 Banner = f''' 
                                                                                            
 kkkkkkkk           lllllll         tttt                                            lllllll 
@@ -35,6 +35,7 @@ textq = '''
 ‖
 ╠ 4) convertor files format
 ‖
+╠ 5) youtube
 ╝
 ''' 
 
@@ -69,7 +70,7 @@ scrbn = f'''
 | '--------------' || '--------------' || '--------------' || '--------------' || '--------------' || '--------------' |
  '----------------'  '----------------'  '----------------'  '----------------'  '----------------'  '----------------' 
  
- KL version - 0.1
+ KL version - {bakaversion}
  
  - 1) CRAZYSNOS
 '''
@@ -79,5 +80,14 @@ whatdecompilate = '''
 ‖
 ╠ 1) jpg to png
 ‖
+╝
+''' 
+
+youtube = f''' 
+╗
+‖
+╠ 1) download youtube video
+‖
+╠ 2) download youtube audio
 ╝
 ''' 

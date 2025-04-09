@@ -10,6 +10,7 @@ import random
 import string
 import time
 import moviepy
+import yt_dlp
 rdn = random.randint(5000000, 10000000000000000)
 current_directory = os.path.dirname(os.path.abspath(__file__))
 
@@ -85,13 +86,31 @@ def convert_mp4_to_mp3(mp4_path, mp3_path):
     audio.write_audiofile(mp3_path)
     audio.close()
     video.close()
-    
+
+def Download_youtube_video(url, save_path):
+    ydl_opts = {
+        'format': 'best',
+        'outtmpl':  os.path.join(save_path, '%(title)s.%(ext)s'),  # Сохранение в указанной папке
+    }
+    with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+        ydl.download([url])
+        
+    if lng == "2":
+        btdprint("Video downloaded successfully!")
+        btdprint("video saved in: " + save_path)
+    if lng == "1":
+        btdprint("видео успешно скачано!")
+        btdprint("видео сохранено в: " + save_path)
 # FUNCTIONS -----------------------------------------------------------------------------------------------------------------------
 
-btdprint("Выберите язык / Choose language 1 - RU, 2 - ENG", 0.025)
+btdprint("Выберите язык / Choose language", 0.025)
+print(" ")
+btdprint("1 - RU")
+print(" ")
+btdprint("2 - ENG")
 print(" ")
 lng = Write.Input(">>", Colors.yellow_to_green, interval=0.025)
-
+#-----------------------------------------------ENGLISH--------------------------------------------------------
 if lng == "2":
     btdprint(SbannerENG.Banner, 0.00025)
     btdprint(SbannerENG.textq, 0.025)
@@ -112,8 +131,9 @@ if lng == "2":
             if inputgk == "1":
                 webbrowser.open('https://t.me/kltzyoutube_pon')
 
+    
     if inputi == "2":
-        smalgnrt = int(Write.Input("from - ", Colors.yellow_to_green, interval=0.025))
+        smalgnrt = int(Write.Input("number from - ", Colors.yellow_to_green, interval=0.025))
         biggnrt = int(Write.Input("to - ", Colors.yellow_to_green, interval=0.025))
         btdprint(str(random.randint(smalgnrt, biggnrt)), 0.025)
         print(" ")
@@ -138,8 +158,24 @@ if lng == "2":
             print(" ")
             print(" ")
             btdprint("File saved as: " + file_path.rsplit(".", 1)[0] + ".png", 0.025)
+            
+        if inputi == "5":
+            btdprint(SbannerENG.youtube)
+            print(" ")
+            ythose = Write.Input(">>", Colors.yellow_to_green, interval=0.025)
+            if ythose == "1":
+                btdprint("write video link")
+                print(" ")
+                url = Write.Input(">>", Colors.yellow_to_green, interval=0.025)
+                btdprint("choose where to save the video")
+                print(" ")
+                root = tk.Tk()
+                save_path = filedialog.askdirectory(title="select path to save")
+                Download_youtube_video(url, save_path)
+                print(" ")
+                btdprint(": " + save_path)
     exxut()
-
+#-----------------------------------------------RUSSIAN--------------------------------------------------------
 if lng == "1":
     btdprint(SbannerRU.Banner, 0.00025)
     btdprint(SbannerRU.textq, 0.025)
@@ -159,40 +195,53 @@ if lng == "1":
 
             if inputgk == "1":
                 webbrowser.open('https://t.me/kltzyoutube_pon')
-
+                
     if inputi == "2":
-        smalgnrt = int(Write.Input("от - ", Colors.yellow_to_green, interval=0.025))
+        smalgnrt = int(Write.Input("число от - ", Colors.yellow_to_green, interval=0.025))
         biggnrt = int(Write.Input("до - ", Colors.yellow_to_green, interval=0.025))
         btdprint(str(random.randint(smalgnrt, biggnrt)), 0.025)
         print(" ")
     
     if inputi == "3":
-        Write.Print("Длина пароля", Colors.yellow_to_green, interval=0.025)
+        Write.Print("длина пароля", Colors.yellow_to_green, interval=0.025)
         length = int(Write.Input(">>", Colors.yellow_to_green, interval=0.025))
-        Write.Print("Использовать цифры? 1 - да, 2 - нет", Colors.yellow_to_green, interval=0.025)
+        Write.Print("использовать цифры? 1 - да, 2 - нет", Colors.yellow_to_green, interval=0.025)
         use_digits = Write.Input(">>", Colors.yellow_to_green, interval=0.025) == "1"
-        Write.Print("Использовать заглавные буквы? 1 - да, 2 - нет", Colors.yellow_to_green, interval=0.025)
+        Write.Print("Использовать заглавные буквы.? 1 - да, 2 - нет", Colors.yellow_to_green, interval=0.025)
         use_uppercase = Write.Input(">>", Colors.yellow_to_green, interval=0.025) == "1"
         Write.Print(generatePassword(int(length), use_digits, use_uppercase), Colors.yellow_to_green, interval=0.025)
-
-
+        
     if inputi == "4":
         btdprint(SbannerRU.whatdecompilate, 0.025)
         inputpg = Write.Input(">>", Colors.yellow_to_green, interval=0.25)
         if inputpg == "1":
             root = tk.Tk()
-            file_path = filedialog.askopenfilename(title="Выберите PNG файл")
+            file_path = filedialog.askopenfilename(title="выберите файл PNG")
             btdprint("путь - " + file_path)
             convert_jpg_to_png(file_path, file_path.rsplit(".", 1)[0] + ".png")
-            btdprint("Файл сохранён как: " + file_path.rsplit(".", 1)[0] + ".png", 0.025)
+            btdprint("File saved as: " + file_path.rsplit(".", 1)[0] + ".png", 0.025)
         
         if inputpg == "2":
             root = tk.Tk()
-            mp4_path = filedialog.askopenfilename(title="Выберите MP4 файл")
+            mp4_path = filedialog.askopenfilename(title="выберите файл MP4")
             mp3_path = mp4_path.rsplit(".", 1)[0] + ".mp3"
             convert_mp4_to_mp3(mp4_path, mp3_path)
             print(" ")
-            print(f"Файл сохранён как: {mp3_path}")
+            print(f"файл сохранён в: {mp3_path}")
+        
+    if inputi == "5":
+        btdprint(SbannerRU.youtube)
+        print(" ")
+        ythose = Write.Input(">>", Colors.yellow_to_green, interval=0.025)
+        if ythose == "1":
+            btdprint("введите сыллку на видео")
+            print(" ")
+            url = Write.Input(">>", Colors.yellow_to_green, interval=0.025)
+            btdprint("where to save the video")
+            print(" ")
+            root = tk.Tk()
+            save_path = filedialog.askdirectory(title="выберите путь для сохранения")
+            Download_youtube_video(url, save_path)
             
     exxut()
 
